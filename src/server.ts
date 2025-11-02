@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.get('/', (req: Request, res: Response) => {
-  res.send(`Server running on port ${PORT}`);
-});
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server ready at http://localhost:${PORT}`);
-=======
 // src/index.ts
 import dotenv from "dotenv";
 import express, { Application } from "express";
@@ -132,5 +116,4 @@ process.on("SIGINT", (signal) => {
       process.exit(0);
     });
   }
->>>>>>> 4cb54b10b67c3b761210825c7e7c9c1b014dc3c5
 });
