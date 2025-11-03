@@ -2,8 +2,8 @@
 import express, { Application } from "express";
 import cors from "cors";
 import { envVars } from "./app/config/envVars";
-import { UserRouter } from "./app/module/user/user.router";
 import golobalErrorHandler from "./app/middlewares/golobalErrorHandler";
+import router from "./routes";
 
 const app: Application = express();
 
@@ -21,7 +21,7 @@ app.get("/", (_req, res) => {
 });
 
 //  routers
-app.use("/api/v1/users", UserRouter);
+app.use("/api/v1", router);
 
 //golobal error handler
 app.use(golobalErrorHandler)
