@@ -1,29 +1,10 @@
 // src/index.ts
-import dotenv from "dotenv";
-import express, { Application } from "express";
-import cors from "cors";
 import { Server } from "node:http";
-import { PrismaClient } from "@prisma/client";
 import { envVars } from "./app/config/envVars";
+import app from "./app";
+import dotenv from "dotenv";
 
 dotenv.config();
-
-// Initialize Express App
-const app: Application = express();
-
-// JSON parser
-app.use(express.json());
-
-// Enable CORS
-app.use(
-  cors({
-    origin: envVars.FRONT_END_URL || "http://localhost:5173",
-    credentials: true, // Allow sending cookies, auth headers, etc.
-  })
-);
-
-// Initialize Prisma Client
-const prisma = new PrismaClient();
 
 // Declare server variable for graceful shutdown
 let server: Server;
@@ -31,89 +12,63 @@ let server: Server;
 // Port setup
 const PORT = parseInt(envVars.PORT, 10) || 5000;
 
-// Basic route
-app.get("/", (req, res) => {
-  res.send("✅ Doctor Appointment API is running!");
-});
-
 /**
- * 🟢 Start Express Server
- */
-server = app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
-
-/**
- * Example async function to test Prisma DB connection
+ * Start the server (and optionally connect to DB here)
  */
 async function startServer() {
   try {
-    const users = await prisma.user.findMany();
-    console.log("✅ Users:", users);
+    // 🗄️ Example: connect to Prisma or MongoDB here
+    // await prisma.$connect();
+
+    server = app.listen(PORT, () => {
+      console.log(`🚀 Server is running on http://localhost:${PORT}`);
+    });
   } catch (err) {
-    console.error(" Error connecting to database:", err);
+    console.error("❌ Error starting the server:", err);
   }
 }
 
+// Run the server
 (async () => {
   await startServer();
 })();
 
 /* ---------------------------------------------------
    🔥 GLOBAL ERROR & SHUTDOWN HANDLERS
-   Handle unexpected errors and OS signals gracefully.
 --------------------------------------------------- */
 
 // 🧠 Handle uncaught synchronous exceptions
 process.on("uncaughtException", (err) => {
-  console.error(" Uncaught Exception... Server shutting down.", err);
-
-  if (server) {
-    server.close(async () => {
-      await prisma.$disconnect();
-      process.exit(1);
-    });
-  } else {
-    process.exit(1);
-  }
+  console.error("💥 Uncaught Exception! Server shutting down.", err);
+  shutdown(1);
 });
 
 // ⚡ Handle unhandled promise rejections
 process.on("unhandledRejection", (error) => {
-  console.error("⚠️ Unhandled Rejection... Server shutting down.", error);
-
-  if (server) {
-    server.close(async () => {
-      await prisma.$disconnect();
-      process.exit(1);
-    });
-  } else {
-    process.exit(1);
-  }
+  console.error("⚠️ Unhandled Rejection! Server shutting down.", error);
+  shutdown(1);
 });
 
-// 🧹 Handle system termination signal (e.g. Docker, Kubernetes)
+// 🧹 Handle system termination signal (e.g., Docker, Kubernetes)
 process.on("SIGTERM", (signal) => {
-  console.log("🧩 SIGTERM received... Server shutting down gracefully.", signal);
-
-  if (server) {
-    server.close(async () => {
-      console.log("✅ Server closed.");
-      await prisma.$disconnect();
-      process.exit(0);
-    });
-  }
+  console.log("🧩 SIGTERM received. Shutting down gracefully.", signal);
+  shutdown(0);
 });
 
 // 🧹 Handle Ctrl+C (manual stop)
 process.on("SIGINT", (signal) => {
-  console.log("🧩 SIGINT received (Ctrl+C)... Server shutting down.", signal);
-
-  if (server) {
-    server.close(async () => {
-      console.log("✅ Server closed.");
-      await prisma.$disconnect();
-      process.exit(0);
-    });
-  }
+  console.log("🧩 SIGINT received (Ctrl+C). Shutting down.", signal);
+  shutdown(0);
 });
+
+// 🔒 Centralized shutdown handler
+function shutdown(exitCode: number) {
+  if (server) {
+    server.close(() => {
+      console.log("✅ Server closed.");
+      process.exit(exitCode);
+    });
+  } else {
+    process.exit(exitCode);
+  }
+}
