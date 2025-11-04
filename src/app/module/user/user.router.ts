@@ -7,7 +7,7 @@ import { UserValidationSchema } from "./user.validation";
 const router = Router();
 
 router.post(
-  "/createuser",
+  "/createpatient",
   filUploder.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -21,7 +21,24 @@ router.post(
       return next(error); 
     }
   },
-  UserController.createUser
+  UserController.createPatient
+);
+router.post(
+  "/createdoctor",
+  filUploder.upload.single("file"),
+  (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if (req.body.data && typeof req.body.data === "string") {
+        req.body = JSON.parse(req.body.data);
+      }
+      UserValidationSchema.createDoctorValidationSchema.parse(req.body);
+
+      next(); 
+    } catch (error) {
+      return next(error); 
+    }
+  },
+  UserController.createDoctor
 );
 
 export const UserRouter = router;
