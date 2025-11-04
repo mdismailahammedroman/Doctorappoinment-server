@@ -10,7 +10,7 @@ const createPatient = catchAsync(async (req: Request, res: Response, next: NextF
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.CREATED,
-    message: "User and Patient created successfully",
+    message: "Patient created successfully",
     data: result,
   });
 });
@@ -20,7 +20,7 @@ const createDoctor = catchAsync(async (req: Request, res: Response, next: NextFu
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.CREATED,
-    message: "User and Doctor created successfully",
+    message: "Doctor created successfully",
     data: result,
   });
 });
@@ -32,7 +32,7 @@ const createAdmin = catchAsync(async (req: Request, res: Response, next: NextFun
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.CREATED,
-    message: "User and Admin created successfully",
+    message: "Admin created successfully",
     data: result,
   });
 });
