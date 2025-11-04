@@ -40,5 +40,24 @@ router.post(
   },
   UserController.createDoctor
 );
+router.post(
+  "/createadmin",
+  filUploder.upload.single("file"),
+  (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if (req.body.data && typeof req.body.data === "string") {
+        req.body = JSON.parse(req.body.data);
+      }
+
+      UserValidationSchema.createAdminValidationSchema.parse(req.body);
+
+      next();
+    } catch (error) {
+      return next(error);
+    }
+  },
+  UserController.createAdmin
+);
+
 
 export const UserRouter = router;

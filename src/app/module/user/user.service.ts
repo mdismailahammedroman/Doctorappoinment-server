@@ -55,7 +55,37 @@ const createDoctor = async (req: Request) => {
   return result;
 };
 
+
+const createAdmin = async (req: Request) => {
+  if (req.file) {
+    const uploadResult = await filUploder.uploadToCloudinary(req.file);
+    req.body.admin.profilePhoto = uploadResult?.secure_url;
+  }
+
+  const hashPassword = await bcrypt.hash(req.body.password, Number(envVars.SALTROUND));
+
+  const result = await prisma.$transaction(async (tnx) => {
+    //  Create user with role = ADMIN
+    await tnx.user.create({
+      data: {
+        email: req.body.admin.email,
+        password: hashPassword,
+        role: "ADMIN",
+      },
+    });
+
+    // 2️⃣ Create admin record
+    return await tnx.admin.create({
+      data: req.body.admin,
+    });
+  });
+
+  return result;
+};
+
+
 export const UserServices = {
   createPatient,
   createDoctor,
+  createAdmin,
 };
