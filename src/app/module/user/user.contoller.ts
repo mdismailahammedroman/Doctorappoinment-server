@@ -17,6 +17,8 @@ const createUser = catchAsync(
     });
   }
 );
+
+
 export const UserController = {
   createUser,
 };
