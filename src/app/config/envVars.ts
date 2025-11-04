@@ -12,6 +12,8 @@ interface CloudinaryConfig {
 interface EnvConfig {
   PORT: string;
   JWT_SECRET: string;
+  JWT_REFRESH_SECRET: string;
+  JWT_EXPIRE:string,
   FRONT_END_URL: string;
   NODE_ENV: string;
   SALTROUND: string;
@@ -23,6 +25,8 @@ const loadEnvVariables = (): EnvConfig => {
     "PORT",
     "FRONT_END_URL",
     "JWT_SECRET",
+    "JWT_REFRESH_SECRET",
+    "JWT_EXPIRE",
     "NODE_ENV",
     "SALTROUND",
     "API_KEY",
@@ -40,6 +44,8 @@ const loadEnvVariables = (): EnvConfig => {
   return {
     PORT: process.env.PORT!,
     JWT_SECRET: process.env.JWT_SECRET!,
+    JWT_EXPIRE: process.env.JWT_EXPIRE!,
+    JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET!,
     FRONT_END_URL: process.env.FRONT_END_URL!,
     NODE_ENV: process.env.NODE_ENV!,
     SALTROUND: process.env.SALTROUND!,
