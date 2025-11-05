@@ -59,5 +59,6 @@ router.post(
   UserController.createAdmin
 );
 
+router.get("/", UserController.getAllUser)
 
 export const UserRouter = router;
