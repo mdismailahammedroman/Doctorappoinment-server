@@ -12,6 +12,7 @@ const userLogin=catchAsync(async(req:Request, res:Response,next:NextFunction)=>{
     res.cookie("accessToken",accessToken,
         {
             secure:true,
+            
             httpOnly:true,
             sameSite:"none",
             maxAge:1000*60*60

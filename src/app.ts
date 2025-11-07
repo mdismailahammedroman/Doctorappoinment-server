@@ -4,11 +4,13 @@ import cors from "cors";
 import { envVars } from "./app/config/envVars";
 import golobalErrorHandler from "./app/middlewares/golobalErrorHandler";
 import router from "./routes";
+import cookieParser from "cookie-parser";
 
 const app: Application = express();
 
 // 🧩 Middleware
 app.use(express.json());
+app.use(cookieParser())
 app.use(
   cors({
     origin: envVars.FRONT_END_URL || "*", 
