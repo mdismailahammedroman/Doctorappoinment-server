@@ -3,6 +3,8 @@ import { UserController } from "./user.contoller";
 import { filUploder } from "../../helpers/fileUploder";
 import validateRequest from "../../middlewares/validateRequest";
 import { UserValidationSchema } from "./user.validation";
+import checkAuth from "../../middlewares/checkAuth";
+import { UserRole } from "@prisma/client";
 
 const router = Router();
 
@@ -59,6 +61,6 @@ router.post(
   UserController.createAdmin
 );
 
-router.get("/", UserController.getAllUser)
+router.get("/", checkAuth(UserRole.DOCTOR,UserRole.ADMIN), UserController.getAllUser)
 
 export const UserRouter = router;
