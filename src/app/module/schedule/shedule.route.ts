@@ -1,25 +1,25 @@
 import { UserRole } from "@prisma/client";
-import { ScheduleContoller } from "./schedule.contoller";
 import checkAuth from "../../middlewares/checkAuth";
 import express from 'express'
+import { ScheduleController } from "./schedule.contoller";
 const router = express.Router();
 
 router.get(
     "/",
     checkAuth(UserRole.DOCTOR, UserRole.DOCTOR),
-    ScheduleContoller.schedulesForDoctor
+    ScheduleController.schedulesForDoctor
 )
 
 router.post(
     "/",
     checkAuth(UserRole.ADMIN),
-    ScheduleContoller.insertIntoDB
+    ScheduleController.insertIntoDB
 )
 
 
-// router.delete(
-//     "/:id",
-//     checkAuth(UserRole.ADMIN),
-//     ScheduleContoller.deleteScheduleFromDB
-// )
+router.delete(
+    "/:id",
+    checkAuth(UserRole.ADMIN),
+    ScheduleController.deleteScheduleFromDB
+)
 export const ScheduleRoutes = router;
