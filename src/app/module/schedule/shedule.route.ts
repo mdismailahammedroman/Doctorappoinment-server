@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get(
     "/",
-    checkAuth(UserRole.DOCTOR, UserRole.DOCTOR),
+    checkAuth(UserRole.DOCTOR, UserRole.ADMIN),
     ScheduleController.schedulesForDoctor
 )
 
