@@ -17,7 +17,7 @@ router.get(
   doctorScheduleController.getMySchedule
 );
 
-
+router.delete('/:id',checkAuth(UserRole.DOCTOR),doctorScheduleController.deleteFromDB)
 router.get(
     '/',
     checkAuth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
