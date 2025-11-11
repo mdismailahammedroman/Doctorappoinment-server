@@ -16,4 +16,11 @@ router.get(
   checkAuth(UserRole.DOCTOR),
   doctorScheduleController.getMySchedule
 );
+
+
+router.get(
+    '/',
+    checkAuth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+    doctorScheduleController.getAllFromDB
+);
 export const doctorSchedule = router;
