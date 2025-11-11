@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { authContoller } from "./auth.contoller";
+import { authController } from "./auth.contoller";
 
 
 const router=Router();
 
-router.use("/login", authContoller.userLogin)
+router.use("/login", authController.userLogin)
 
 export const authRoute=router
