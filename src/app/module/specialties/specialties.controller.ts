@@ -6,7 +6,7 @@ import { SpecialtiesService } from "./specialties.service";
 
 
 const createSpecialtie = catchAsync(async (req: Request, res: Response, next:NextFunction) => {
-    const result = await SpecialtiesService.createSpecialtie(req);
+    const result = await SpecialtiesService.createSpecialty(req);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
