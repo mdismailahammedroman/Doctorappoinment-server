@@ -3,6 +3,8 @@ import { prisma } from "../../utils/prisma";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../../utils/jwt";
 import { envVars } from "../../config/envVars";
+import status from "http-status";
+import { AppError } from "../../helpers/errorHelpers";
 
 const userLogin = async (payload: { email: string; password: string }) => {
   // Check user existence and active status
@@ -16,7 +18,7 @@ const userLogin = async (payload: { email: string; password: string }) => {
   // Check password
   const isCorrectPassword = await bcrypt.compare(payload.password, LoginUser.password);
   if (!isCorrectPassword) {
-    throw new Error("Password is incorrect");
+throw new AppError(status.UNAUTHORIZED, "Password is incorrect"); 
   }
 
   // Generate tokens
