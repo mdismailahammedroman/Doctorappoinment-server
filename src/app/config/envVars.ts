@@ -18,6 +18,7 @@ interface EnvConfig {
   NODE_ENV: string;
   SALTROUND: string;
   CLOUDINARY: CloudinaryConfig;
+  OPENROUTER_API:string
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -33,6 +34,7 @@ const loadEnvVariables = (): EnvConfig => {
     "API_SECRET",
     "CLOUDINARY_URL",
     "CLOUDINARY_NAME",
+    "OPENROUTER_API",
   ];
 
   requiredEnvVariables.forEach((key) => {
@@ -55,6 +57,7 @@ const loadEnvVariables = (): EnvConfig => {
       CLOUDINARY_URL: process.env.CLOUDINARY_URL!,
       CLOUDINARY_NAME: process.env.CLOUDINARY_NAME!,
     },
+    OPENROUTER_API:process.env.OPENROUTER_API!,
   };
 };
 

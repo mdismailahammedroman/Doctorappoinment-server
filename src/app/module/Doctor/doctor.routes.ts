@@ -8,5 +8,5 @@ router.get(
     "/",
     DoctorController.getAllDoctor
 );
-
+router.get("/:id",DoctorController.getSingelDoctor)
 export const DoctorRoutes = router;
