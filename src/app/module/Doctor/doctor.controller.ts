@@ -20,6 +20,19 @@ const getAllDoctor = catchAsync(async (req: Request, res: Response, next:NextFun
     })
 })
 
+const getSingelDoctor=catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
+     const { id } = req.params;
+    const result =await DoctorService.getSingelDoctor(id)
+     sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Doctor retrieval successfully',
+        data: result,
+    });
+
+})
+
 export const DoctorController={
     getAllDoctor,
+    getSingelDoctor
 }
