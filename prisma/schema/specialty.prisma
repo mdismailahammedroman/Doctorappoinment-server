@@ -13,6 +13,7 @@ model DoctorSpecialties {
 
   doctorId String
   doctor   Doctor @relation(fields: [doctorId], references: [id])
+  isDeleted Boolean @default(false) 
 
   @@id([specialitiesId, doctorId])
   @@map("doctor_specialties")

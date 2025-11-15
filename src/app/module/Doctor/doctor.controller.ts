@@ -31,8 +31,32 @@ const getSingelDoctor=catchAsync(async(req:Request,res:Response,next:NextFunctio
     });
 
 })
+const deleteDoctor=catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
+     const { id } = req.params;
+    const result =await DoctorService.deleteDoctor(id)
+     sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Doctor retrieval successfully',
+        data: result,
+    });
+
+})
+const updateDoctorData=catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
+     const { id } = req.params;
+    const result =await DoctorService.updateDoctorData(id,req.body)
+     sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Doctor retrieval successfully',
+        data: result,
+    });
+
+})
 
 export const DoctorController={
     getAllDoctor,
-    getSingelDoctor
+    getSingelDoctor,
+    deleteDoctor,
+    updateDoctorData,
 }

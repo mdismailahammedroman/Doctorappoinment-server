@@ -12,4 +12,5 @@ router.get(
 );
 router.get("/:id",DoctorController.getSingelDoctor)
 router.get("/:id",checkAuth(UserRole.ADMIN), DoctorController.deleteDoctor)
+router.patch("/:id",checkAuth(UserRole.DOCTOR,UserRole.ADMIN), DoctorController.updateDoctorData)
 export const DoctorRoutes = router;
