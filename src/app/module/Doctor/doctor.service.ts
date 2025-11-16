@@ -6,6 +6,10 @@ import {
 import { doctorSearchableFields } from "./doctor.constant";
 import { prisma } from "../../utils/prisma";
 import { IDoctorUpdateInput } from "./doctor.interface";
+import { AppError } from "../../helpers/errorHelpers";
+import httpStatus from 'http-status'
+import { openai } from "../../helpers/openaiRoute";
+import { extractJsonFromMessage } from "../../helpers/extractJsonFromMessage";
 
 const getDoctors = async (fillters: any, options: IPaginationOptions) => {
   const { page, limit, skip, sortBy, sortOrder } =
@@ -128,89 +132,121 @@ const deleteDoctor = async (id: string): Promise<Doctor | null> => {
   });
 };
 
-
 const updateDoctorData = async (
   id: string,
   payload: Partial<IDoctorUpdateInput>
 ) => {
-  const { specialties, ...doctorData } = payload;
-
-  // Fetch existing doctor including specialties
-  const existingDoctor = await prisma.doctor.findUnique({
-    where: { id },
-    include: { doctorSpecialties: true },
-  });
-
-  if (!existingDoctor) {
-    throw new Error("Doctor not found");
-  }
-
-  // Extract specialty IDs
-  const existingSpecialtyIds = existingDoctor.doctorSpecialties.map(
-    (ds) => ds.specialitiesId
-  );
-
-  const incomingSpecialtyIds = specialties?.map((s) => s.specialtyId) || [];
-
-  return await prisma.$transaction(async (tx) => {
-    // Update doctor fields
-    await tx.doctor.update({
-      where: { id },
-      data: doctorData,
+  const doctorInfo = await prisma.doctor.findUniqueOrThrow({
+        where: {
+            id
+        }
     });
 
-    // Soft-delete specialties removed from input
-    const toDelete = existingSpecialtyIds.filter(
-      (sid) => !incomingSpecialtyIds.includes(sid)
-    );
+    const { specialties, ...doctorData } = payload;
 
-    if (toDelete.length > 0) {
-      await tx.doctorSpecialties.updateMany({
-        where: { doctorId: id, specialitiesId: { in: toDelete } },
-        data: { isDeleted: true },
-      });
-    }
+    return await prisma.$transaction(async (tnx) => {
+        if (specialties && specialties.length > 0) {
+            const deleteSpecialtyIds = specialties.filter((specialty) => specialty.isDeleted);
 
-    // Upsert (create/update) specialties
-    if (specialties && specialties.length > 0) {
-      for (const sp of specialties) {
-        await tx.doctorSpecialties.upsert({
-          where: {
-            specialitiesId_doctorId: {
-              specialitiesId: sp.specialtyId,
-              doctorId: id,
+            for (const specialty of deleteSpecialtyIds) {
+                await tnx.doctorSpecialties.deleteMany({
+                    where: {
+                        doctorId: id,
+                        specialitiesId: specialty.specialtyId
+                    }
+                })
+            }
+
+            const createSpecialtyIds = specialties.filter((specialty) => !specialty.isDeleted);
+
+            for (const specialty of createSpecialtyIds) {
+                await tnx.doctorSpecialties.create({
+                    data: {
+                        doctorId: id,
+                        specialitiesId: specialty.specialtyId
+                    }
+                })
+            }
+
+        }
+
+        const updatedData = await tnx.doctor.update({
+            where: {
+                id: doctorInfo.id
             },
-          },
-          update: {
-            isDeleted: sp.isDeleted ?? false,
-          },
-          create: {
-            specialitiesId: sp.specialtyId,
-            doctorId: id,
-            isDeleted: sp.isDeleted ?? false,
-          },
-        });
-      }
-    }
+            data: doctorData,
+            include: {
+                doctorSpecialties: {
+                    include: {
+                        specialities: true
+                    }
+                }
+            }
 
-    // Return updated doctor with non-deleted specialties
-    return tx.doctor.findUnique({
-      where: { id },
-      include: {
-        doctorSpecialties: {
-          where: { isDeleted: false },
-          include: { specialities: true },
-        },
-      },
+            //  doctor - doctorSpecailties - specialities 
+        })
+
+        return updatedData
+    })
+
+
+}
+
+
+const getAiDoctorSuggetion=async(payload:{sympthom:string})=>{
+    if (!(payload && payload.sympthom)) {
+        throw new AppError(httpStatus.BAD_REQUEST, "symptoms is required!")
+    };
+
+    const doctors = await prisma.doctor.findMany({
+        where: { isDeleted: false },
+        include: {
+            doctorSpecialties: {
+                include: {
+                    specialities: true
+                }
+            }
+        }
     });
-  });
-};
 
+    console.log("doctors data loaded.......\n");
+    const prompt = `
+You are a medical assistant AI. Based on the patient's symptoms, suggest the top 3 most suitable doctors.
+Each doctor has specialties and years of experience.
+Only suggest doctors who are relevant to the given symptoms.
 
-  
+Symptoms: ${payload.sympthom}
+
+Here is the doctor list (in JSON):
+${JSON.stringify(doctors, null, 2)}
+
+Return your response in JSON format with full individual doctor data. 
+`;
+
+    console.log("analyzing......\n")
+    const completion = await openai.chat.completions.create({
+        model: 'z-ai/glm-4.5-air:free',
+        messages: [
+            {
+                role: "system",
+                content:
+                    "You are a helpful AI medical assistant that provides doctor suggestions.",
+            },
+            {
+                role: 'user',
+                content: prompt,
+            },
+        ],
+    });
+
+    const result = await extractJsonFromMessage(completion.choices[0].message)
+    return result;
+}
+
 export const DoctorService = {
   getDoctors,
   getSingelDoctor,
   deleteDoctor,
   updateDoctorData,
+  getAiDoctorSuggetion
 };
