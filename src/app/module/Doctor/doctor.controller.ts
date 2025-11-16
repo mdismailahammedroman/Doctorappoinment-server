@@ -54,9 +54,19 @@ const updateDoctorData=catchAsync(async(req:Request,res:Response,next:NextFuncti
 
 })
 
+const getAiDoctorSuggetion=catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
+    const result=await DoctorService.getAiDoctorSuggetion(req.body)
+    sendResponse(res,{
+        success:true,
+        statusCode:200,
+        message:"ai doctor suggest",
+        data:result,
+    })
+})
 export const DoctorController={
     getAllDoctor,
     getSingelDoctor,
     deleteDoctor,
     updateDoctorData,
+    getAiDoctorSuggetion,
 }
