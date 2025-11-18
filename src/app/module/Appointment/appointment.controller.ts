@@ -12,7 +12,7 @@ const createAppoinment = catchAsync(
     next: NextFunction
   ) => {
     const user = req.user;
-    const result = await AppointmentService.createAppoinment(
+    const result = await AppointmentService.createAppointment(
       user as IJWTPayload,
       req.body
     );
