@@ -18,7 +18,10 @@ interface EnvConfig {
   NODE_ENV: string;
   SALTROUND: string;
   CLOUDINARY: CloudinaryConfig;
-  OPENROUTER_API:string
+  OPENROUTER_API:string;
+  STRIP_SCERECT_KEY:string;
+  STRIPE_WEBHOOK_SCRECT:string
+
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -35,6 +38,8 @@ const loadEnvVariables = (): EnvConfig => {
     "CLOUDINARY_URL",
     "CLOUDINARY_NAME",
     "OPENROUTER_API",
+    "STRIP_SCERECT_KEY",
+    "STRIPE_WEBHOOK_SCRECT",
   ];
 
   requiredEnvVariables.forEach((key) => {
@@ -58,6 +63,8 @@ const loadEnvVariables = (): EnvConfig => {
       CLOUDINARY_NAME: process.env.CLOUDINARY_NAME!,
     },
     OPENROUTER_API:process.env.OPENROUTER_API!,
+    STRIP_SCERECT_KEY:process.env.STRIP_SCERECT_KEY!,
+    STRIPE_WEBHOOK_SCRECT:process.env.STRIPE_WEBHOOK_SCRECT!,
   };
 };
 

@@ -5,8 +5,15 @@ import { envVars } from "./app/config/envVars";
 import golobalErrorHandler from "./app/middlewares/golobalErrorHandler";
 import router from "./routes";
 import cookieParser from "cookie-parser";
+import { paymentController } from "./app/module/Payment/payment.controller";
 
 const app: Application = express();
+
+app.post(
+    "/webhook",
+    express.raw({ type: "application/json" }),
+    paymentController.stripeWebhookHandler
+);
 
 // 🧩 Middleware
 app.use(express.json());
