@@ -1,0 +1,112 @@
+[33mface4fb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mpaymentsetup[m[33m)[m Remove env secret
+[33mab976a4[m[33m ([m[1;31morigin/paymentsetup[m[33m)[m Merge pull request #14 from mdismailahammedroman/paymentsetup
+[33m444710c[m Merge branch 'development' into paymentsetup
+[33ma89147f[m create paymentwith stripe
+[33m8c9855d[m Merge pull request #13 from mdismailahammedroman/apoinmnet
+[33mac1ef3e[m Merge pull request #13 from mdismailahammedroman/apoinmnet
+[33m898f7c6[m[33m ([m[1;31morigin/apoinmnet[m[33m)[m Appointment create with tnx
+[33m84dfc6e[m[33m ([m[1;32mapoinmnet[m[33m)[m Appointment create with tnx
+[33m9ff9311[m Appointment create
+[33ma33e8cc[m Appointment create
+[33m027b48c[m Appointment schema wiht prisma
+[33m77c3577[m Appointment schema wiht prisma
+[33m731925e[m Merge pull request #12 from mdismailahammedroman/Doctor
+[33mbcffc00[m Merge pull request #12 from mdismailahammedroman/Doctor
+[33mdd3c5a5[m[33m ([m[1;31morigin/Doctor[m[33m)[m doctor ai suggetion done
+[33m5e25dc7[m[33m ([m[1;32mDoctor[m[33m)[m doctor ai suggetion done
+[33m889601a[m update Doctor
+[33mbee1dea[m update Doctor
+[33m69b1cb2[m deleteDoctor
+[33mdef1610[m deleteDoctor
+[33m8e5889b[m getSingelDoctor
+[33mff23cea[m getSingelDoctor
+[33m782569f[m getdoctor
+[33mb9fe8fd[m getdoctor
+[33m6be98bf[m Merge pull request #11 from mdismailahammedroman/specialties
+[33mc1fa2fd[m Merge pull request #11 from mdismailahammedroman/specialties
+[33m211d244[m[33m ([m[1;31morigin/specialties[m[33m)[m Save changes to specialties and schema
+[33m73630bd[m[33m ([m[1;32mspecialties[m[33m)[m Save changes to specialties and schema
+[33m1d71fcf[m Merge pull request #10 from mdismailahammedroman/specialties
+[33m2d0a89e[m Merge pull request #10 from mdismailahammedroman/specialties
+[33md664546[m create specialities
+[33m3cde4e2[m create specialities
+[33m144024e[m createSpecialtie
+[33mc622812[m createSpecialtie
+[33m9b31a83[m error hepler edit
+[33ma5538fc[m error hepler edit
+[33m012dffb[m prisma error handel set in golobalerror
+[33ma95489c[m prisma error handel set in golobalerror
+[33m63a0038[m apperro add stack
+[33md59706d[m apperro add stack
+[33mbff46ac[m Merge pull request #9 from mdismailahammedroman/doctoreSchedule
+[33m9b9d793[m Merge pull request #9 from mdismailahammedroman/doctoreSchedule
+[33m1aedb51[m[33m ([m[1;31morigin/doctoreSchedule[m[33m)[m sheduledoctor delete
+[33m785e7b5[m[33m ([m[1;32mdoctoreSchedule[m[33m)[m sheduledoctor delete
+[33m597ff24[m get doc all schedule
+[33m8c19c94[m get doc all schedule
+[33m310305a[m doctor get his schedule
+[33mdea4e92[m doctor get his schedule
+[33ma384289[m shedule create for doctor
+[33mb413227[m shedule create for doctor
+[33m1134cc5[m Merge pull request #8 from mdismailahammedroman/create-users
+[33m0a262b6[m Merge pull request #8 from mdismailahammedroman/create-users
+[33m6452f45[m[33m ([m[1;31morigin/create-users[m[33m)[m shedule delete
+[33m95e6726[m[33m ([m[1;32mcreate-users[m[33m)[m shedule delete
+[33mdeaf48c[m shedule for doctor
+[33m7e37b16[m shedule for doctor
+[33ma905849[m shedule create
+[33m7f804ec[m shedule create
+[33ma66277c[m Merge pull request #7 from mdismailahammedroman/create-users
+[33m2b52d12[m Merge pull request #7 from mdismailahammedroman/create-users
+[33m812b40e[m userpart done
+[33m336c861[m userpart done
+[33mca26a9e[m Merge pull request #6 from mdismailahammedroman/create-users
+[33m5696c38[m Merge pull request #6 from mdismailahammedroman/create-users
+[33m9c4c102[m paigantion pick, getalluser
+[33meccd75c[m paigantion pick, getalluser
+[33mf498055[m create doctor
+[33md767b2f[m create doctor
+[33m10bc14f[m Merge pull request #5 from mdismailahammedroman/create-users
+[33m11f0452[m Merge pull request #5 from mdismailahammedroman/create-users
+[33m2572ab5[m create admin done
+[33m5f1fb03[m create admin done
+[33m9cf2cc7[m login doctor done
+[33m27d885a[m login doctor done
+[33md5684a4[m login user done
+[33mf2c6f11[m login user done
+[33mdeb4411[m error helper
+[33m5d401cc[m error helper
+[33m3f94b43[m userlogin logic
+[33m9c80353[m userlogin logic
+[33m627b903[m user register done with cloudinary setup done
+[33m73338e3[m user register done with cloudinary setup done
+[33m0d0d8fd[m Merge pull request #4 from mdismailahammedroman/create-users
+[33mbbd9550[m Merge pull request #4 from mdismailahammedroman/create-users
+[33m88025cf[m create 1st user
+[33m97192d1[m create 1st user
+[33m1f19000[m Merge pull request #3 from mdismailahammedroman/create-users
+[33m5fb9da5[m Merge pull request #3 from mdismailahammedroman/create-users
+[33maa5a619[m create 1st user
+[33m0a44f69[m create 1st user
+[33m300ed35[m create golobalErrorhandler and sendresponse
+[33md871bda[m create golobalErrorhandler and sendresponse
+[33mad7fcc9[m set route
+[33m295502a[m set route
+[33m8aae0d6[m Merge pull request #2 from mdismailahammedroman/project-setup
+[33m1a64f93[m Merge pull request #2 from mdismailahammedroman/project-setup
+[33mb59278b[m[33m ([m[1;31morigin/project-setup[m[33m)[m Merge branch 'development' into project-setup
+[33mf42b031[m[33m ([m[1;32mproject-setup[m[33m)[m Merge branch 'development' into project-setup
+[33meaae347[m Initial commit for new project
+[33mbee9935[m Initial commit for new project
+[33m4c5ecda[m Initial commit for new project
+[33m0f02d81[m Initial commit for new project
+[33mdb2427e[m Merge new project with existing development
+[33m1cc7c3c[m Merge new project with existing development
+[33m4cb54b1[m Resolve merge conflicts
+[33m062ac66[m Resolve merge conflicts
+[33m6a8fc1a[m git initialize
+[33m60778db[m Merge pull request #1 from mdismailahammedroman/project-setup
+[33mebfb07d[m Merge pull request #1 from mdismailahammedroman/project-setup
+[33m3da1a96[m Initial prisma
+[33m9dae9ca[m Initial prisma
+[33m836326d[m Initial
